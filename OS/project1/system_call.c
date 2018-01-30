@@ -8,13 +8,14 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/time.h>
-#define SAMPLE_SIZE 50
+#include <time.h>
+#define SAMPLE_SIZE 10000
 
 int main()
 {
-  long sum = 0, delta = 0, average = 0;
+  int i;
+  double sum = 0, delta = 0, average = 0;
   struct timespec start, end;
-
 
   char data[0];
 
@@ -23,17 +24,14 @@ int main()
   if(file_dscr < 0) //error
     return 1;
 
-  // if(read(file_dscr, data, 0) < 0)
-  //   return 1;
-
-  for(int i = 0; i < SAMPLE_SIZE; i++)
+  for(i = 0; i < SAMPLE_SIZE; i++)
   {
     clock_gettime(CLOCK_MONOTONIC, &start);
     read(file_dscr,data,0);
     clock_gettime(CLOCK_MONOTONIC, &end);
 
     delta = end.tv_nsec - start.tv_nsec;
-    printf(" %d %li\n", i,delta);
+    //printf(" %d %.05f\n", i,delta);
     sum += delta;
   }
 
@@ -42,7 +40,7 @@ int main()
 
   average = sum/SAMPLE_SIZE;
 
-  printf("%.03li nanoseconds\n", average);
+  printf("%.08f nanoseconds\n", average);
 
 //may want to remove file after operation to clean up
 
