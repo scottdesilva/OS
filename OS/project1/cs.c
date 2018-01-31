@@ -44,7 +44,7 @@ int main()
     for(i = 0; i < SAMPLE_SIZE; i++)
     {
       close(pp[0]);                                       //close read end of parent pipe before writing from it
-      write(pp[1], NULL, 0);                               //send arbitrary data to child via parent pipe
+      write(pp[1], " ", 1);                               //send arbitrary data to child via parent pipe
       clock_gettime(CLOCK_MONOTONIC, &start);             //get time closest to start of the context switch
 
       close(cp[1]);                                       //close write end of child pipe
