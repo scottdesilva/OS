@@ -26,23 +26,20 @@ int main()
 
   for(i = 0; i < SAMPLE_SIZE; i++)
   {
-    clock_gettime(CLOCK_MONOTONIC, &start);
-    read(file_dscr,data,0);
-    clock_gettime(CLOCK_MONOTONIC, &end);
+    clock_gettime(CLOCK_MONOTONIC, &start); //get time right before making the sys call
+    read(file_dscr,data,0);                 //make the system call read for 0 bytes
+    clock_gettime(CLOCK_MONOTONIC, &end);   //get time right after making the sys call
 
-    delta = end.tv_nsec - start.tv_nsec;
-    //printf(" %d %.05f\n", i,delta);
-    sum += delta;
+    delta = end.tv_nsec - start.tv_nsec;    //calculate difference in time1 and time2
+    sum += delta;                           //accumulate differences from each loop
   }
 
+  //close file
   if(close(file_dscr) < 0)
     return 1;
 
-  average = sum/SAMPLE_SIZE;
-
-  printf("%.08f nanoseconds\n", average);
-
-//may want to remove file after operation to clean up
+  average = sum/SAMPLE_SIZE;                //calculate average 
+  printf("%.08f nanoseconds\n", average);   //display average
 
   return 0;
 }
