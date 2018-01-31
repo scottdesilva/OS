@@ -14,7 +14,7 @@
 #include <sched.h>
 #include <math.h>
 
-#define SAMPLE_SIZE 100
+#define SAMPLE_SIZE 500
 
 int main()
 {
@@ -51,9 +51,11 @@ int main()
       read(cp[0], &time_stmp, sizeof(time_stmp));         //read timestamp from child pipe
 
       delta = time_stmp - start.tv_nsec;                  //(time child read pipe message) - (time parent sent message)
-      printf("pdelta:%ld\n", delta);
+  //    printf("pdelta:%ld\n", delta);                    //use to check diffeence values
       sum += delta;
     }
+
+    printf("AVG: %ld\n nanoseconds", sum/SAMPLE_SIZE);    //display average of sample size
   }
 
   else  //child process
@@ -68,8 +70,6 @@ int main()
       write(cp[1], &end.tv_nsec, sizeof(end.tv_nsec));    //send the time at which read finished to the parent via child pipe
     }
   }
-
-  printf("AVG: %ld\n", sum/SAMPLE_SIZE);
 
   return 0;
 }
