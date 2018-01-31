@@ -55,7 +55,7 @@ int main()
       sum += delta;
     }
 
-    printf("AVG: %ld\n nanoseconds", sum/SAMPLE_SIZE);    //display average of sample size
+    printf("AVG: %ld\n nanoseconds\n", sum/SAMPLE_SIZE);    //display average of sample size
   }
 
   else  //child process
