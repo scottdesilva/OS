@@ -31,6 +31,7 @@ int main()
     clock_gettime(CLOCK_MONOTONIC, &end);   //get time right after making the sys call
 
     delta = end.tv_nsec - start.tv_nsec;    //calculate difference in time1 and time2
+    printf("%ld - %ld\n", end.tv_nsec, start.tv_nsec );
     sum += delta;                           //accumulate differences from each loop
   }
 
@@ -38,8 +39,8 @@ int main()
   if(close(file_dscr) < 0)
     return 1;
 
-  average = sum/SAMPLE_SIZE;                //calculate average 
-  printf("%.08f nanoseconds\n", average);   //display average
+  average = sum/SAMPLE_SIZE;                //calculate average
+  printf("%f nanoseconds\n", average);      //display average
 
   return 0;
 }
